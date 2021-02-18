@@ -1,6 +1,6 @@
 {
   "name": "@gura/use-global",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "dumi dev",
     "build": "father-build",
@@ -34,9 +34,7 @@
     "lodash": "^4.17.20",
     "react": "^16.12.0"
   },
-  "peerDependencies": {
-
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@umijs/test": "^3.0.5",
     "dumi": "^1.0.10",
