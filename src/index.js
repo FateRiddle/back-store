@@ -34,15 +34,25 @@ const useSet = initState => {
   return [state, _setState];
 };
 
-const Global = createContext([]); // store
+const globalContext = {};
+
+globalContext.STORE = createContext();
+globalContext.SET = createContext();
 
 const Store = ({ value, children }) => {
-  const statePair = useSet(value); // [store, setStore]
-  return <Global.Provider value={statePair}>{children}</Global.Provider>;
+  const [store, setStore] = useSet(value);
+  const Ctx1 = globalContext.STORE;
+  const Ctx2 = globalContext.SET;
+  return (
+    <Ctx1.Provider value={store}>
+      <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
+    </Ctx1.Provider>
+  );
 };
 
 export const useGlobal = path => {
-  const [store, setStore] = useContext(Global);
+  const store = useContext(globalContext.STORE);
+  const setStore = useContext(globalContext.SET);
 
   const setStateWithPath = (path, value) => {
     let copy = clone(store);

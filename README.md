@@ -1,27 +1,37 @@
 # useGlobal
 
-## Getting Started
+Minimalist state management tools only for React.js
 
-Install dependencies,
+## Features
 
-```bash
-$ npm i
-```
+- Progressive adoption
+- Minimalist api
+- Extremely reusable
 
-Start the dev server,
+```js
+import React from 'react';
+import Global, { useGlobal } from '@gura/use-global';
+const Root = () => {
+  return (
+    <Global value={{ page1: { count: 1 }, page2: { a: { b: 'hello' } } }}>
+      <App />
+    </Global>
+  );
+};
 
-```bash
-$ npm start
-```
+const App = () => {
+  const [store, setStore] = useGlobal('page1'); // getting global state from store
+  const { count } = store;
+  const plusOne = () => setStore({ count: count + 1 }); // just like setState
+  const minusOne = () => setStore('count', count - 1); // lodash.set like syntax for possible deep structure setStore('a.b.c', xx)
+  return (
+    <div>
+      <div>{count}</div>
+      <button onClick={plusOne}>+</button>
+      <button onClick={minusOne}>-</button>
+    </div>
+  );
+};
 
-Build documentation,
-
-```bash
-$ npm run docs:build
-```
-
-Build library via `father-build`,
-
-```bash
-$ npm run build
+export default Root;
 ```
