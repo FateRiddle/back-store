@@ -32,14 +32,16 @@ const App = () => {
   const [store, setStore] = useGlobal(); // getting global state from store
   const { count } = store;
 
-  const plusOne = () => setStore({ count: count + 1 });
-
+  const plusOne = () => setStore('count', count + 1);
   const minusOne = () => setStore({ count: count - 1 });
+  const setRandom = () => setStore('a.b.c', Math.random());
+
   return (
     <div>
       <div>{JSON.stringify(store)}</div>
       <button onClick={plusOne}>+</button>
       <button onClick={minusOne}>-</button>
+      <button onClick={setRandom}>a.b.c</button>
     </div>
   );
 };
