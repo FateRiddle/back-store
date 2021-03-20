@@ -1,5 +1,5 @@
 {
-  "name": "@gura/use-global",
+  "name": "@ali/use-global",
   "version": "1.0.1",
   "scripts": {
     "start": "dumi dev",

@@ -8,7 +8,7 @@ nav:
 
 ```jsx
 import React from 'react';
-import Global, { useGlobal } from '@gura/use-global';
+import Global, { useGlobal } from '@ali/use-global';
 
 const Wrapper = ({ children }) => <div>{children}</div>;
 
@@ -64,7 +64,7 @@ And
 ## Install
 
 ```sh
-yarn add @gura/use-global
+tnpm i -S @ali/use-global
 ```
 
 ## Usage
@@ -76,7 +76,7 @@ yarn add @gura/use-global
 
 ```js
 import React from 'react';
-import Global from '@gura/use-global';
+import Global from '@ali/use-global';
 
 const initialState = {
   page1: { count: 1 },
@@ -98,7 +98,7 @@ Profit (anywhere! )
 
 ```js
 // Anywhere inside <App />
-import { useGlobal } from '@gura/use-global';
+import { useGlobal } from '@ali/use-global';
 const Counter = () => {
   const [store, setStore] = useGlobal('page1'); // getting global state from store
   const { count } = store;
@@ -136,7 +136,7 @@ const [_, setStore] = useGlobal('xxx');
 
 ```js
 // Anywhere inside <App />
-import { useGlobal } from '@gura/use-global';
+import { useGlobal } from '@ali/use-global';
 const Something = () => {
   const [store, setStore] = useGlobal('page2');
   const changeText = () => setStore('a.b.text', 'hello world!');
@@ -153,7 +153,7 @@ const Something = () => {
 
 ```js
 import React from 'react';
-import Global from '@gura/use-global';
+import Global from '@ali/use-global';
 
 const Root = () => {
   return (
@@ -188,7 +188,7 @@ const AnotherProject = () => (
 
 ```js
 // Anywhere inside <App />
-import { useGlobal } from '@gura/use-global';
+import { useGlobal } from '@ali/use-global';
 const Something = () => {
   const [store, setStore] = useGlobal('page2');
   const changeTextAsync = () => {
@@ -205,7 +205,7 @@ const Something = () => {
 
 ```jsx
 import React from 'react';
-import Global, { useGlobal } from '@gura/use-global';
+import Global, { useGlobal } from '@ali/use-global';
 
 const Wrapper = ({ children }) => <div>{children}</div>;
 
@@ -248,7 +248,7 @@ class way
 
 ```js
 import React from 'react';
-import Global, { useGlobal, GlobalContext } from '@gura/use-global';
+import Global, { useGlobal, GlobalContext } from '@ali/use-global';
 
 const Wrapper = ({ children }) => <div>{children}</div>;
 

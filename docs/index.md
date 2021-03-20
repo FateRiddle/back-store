@@ -20,7 +20,7 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ```jsx
 import React from 'react';
-import Global, { useGlobal } from '@gura/use-global';
+import Global, { useGlobal } from '@ali/use-global';
 const Root = () => {
   return (
     <Global value={{ count: 0 }}>
