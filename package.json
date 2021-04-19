@@ -1,6 +1,6 @@
 {
   "name": "@ali/use-global",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "scripts": {
     "start": "dumi dev",
     "build": "father-build",
