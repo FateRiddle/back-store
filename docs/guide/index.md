@@ -35,6 +35,13 @@ const App = () => {
   const plusOne = () => setStore('count', count + 1);
   const minusOne = () => setStore({ count: count - 1 });
   const setRandom = () => setStore('a.b.c', Math.random());
+  const setStateWithFunction = () => {
+    setStore(store => {
+      return {
+        count: store.count + 10,
+      };
+    });
+  };
 
   return (
     <div>
@@ -42,6 +49,7 @@ const App = () => {
       <button onClick={plusOne}>+</button>
       <button onClick={minusOne}>-</button>
       <button onClick={setRandom}>a.b.c</button>
+      <button onClick={setStateWithFunction}>使用函数</button>
     </div>
   );
 };

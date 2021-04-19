@@ -5,8 +5,15 @@ import set from 'lodash/set';
 const clone = value => JSON.parse(JSON.stringify(value));
 
 const useSet = initState => {
+  // 提供函数式调用，避免同时修改一个状态时产生的state闭包，只有最后一次调用更新的问题
   const reducer = (state, action) => {
-    return { ...state, ...action };
+    let result;
+    if (typeof action === 'function') {
+      result = { ...state, ...action(state) };
+    } else {
+      result = { ...state, ...action };
+    }
+    return result;
   };
   const [state, setState] = useReducer(reducer, initState);
   const setStateWithPath = (path, value) => {
