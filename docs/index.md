@@ -1,6 +1,6 @@
 ---
 hero:
-  title: use-global
+  title: back-store
   desc: Minimalist state management tools only for React.js
   actions:
     - text: Getting Started
@@ -20,7 +20,7 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ```jsx
 import React from 'react';
-import Global, { useGlobal } from '@ali/use-global';
+import Global, { useGlobal } from 'back-store';
 const Root = () => {
   return (
     <Global value={{ count: 0 }}>

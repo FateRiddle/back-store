@@ -10,7 +10,7 @@ Minimalist state management tools only for React.js
 
 ```js
 import React from 'react';
-import Global, { useGlobal } from '@ali/use-global';
+import Global, { useGlobal } from 'back-store';
 const Root = () => {
   return (
     <Global value={{ page1: { count: 1 }, page2: { a: { b: 'hello' } } }}>
