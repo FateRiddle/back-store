@@ -12,8 +12,6 @@
     "pub": "npm publish --access public",
     "beta": "npm publish --tag beta --access public",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage",
     "size": "ANALYZE=1 dumi build"
   },
   "main": "dist/index.js",
