@@ -7,6 +7,10 @@ nav:
 ---
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import Global, { useGlobal } from 'back-store';
 
