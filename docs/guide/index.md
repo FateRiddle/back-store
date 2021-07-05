@@ -16,6 +16,7 @@ import Global, { useGlobal } from 'back-store';
 
 const Wrapper = ({ children }) => <div>{children}</div>;
 
+// 模拟在很底层的组件需要取全局的状态
 const Root = () => {
   return (
     <Global value={{ count: 1 }}>
