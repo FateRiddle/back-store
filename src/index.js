@@ -41,15 +41,15 @@ const useSet = initState => {
   return [state, _setState];
 };
 
-const globalContext = {};
+const StoreContext = {};
 
-globalContext.STORE = createContext();
-globalContext.SET = createContext();
+StoreContext.STORE = createContext();
+StoreContext.SET = createContext();
 
 const Store = ({ value, children }) => {
   const [store, setStore] = useSet(value);
-  const Ctx1 = globalContext.STORE;
-  const Ctx2 = globalContext.SET;
+  const Ctx1 = StoreContext.STORE;
+  const Ctx2 = StoreContext.SET;
   return (
     <Ctx1.Provider value={store}>
       <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
@@ -57,9 +57,9 @@ const Store = ({ value, children }) => {
   );
 };
 
-export const useGlobal = path => {
-  const store = useContext(globalContext.STORE);
-  const setStore = useContext(globalContext.SET);
+export const useStore = path => {
+  const store = useContext(StoreContext.STORE);
+  const setStore = useContext(StoreContext.SET);
 
   const setStateWithPath = (path, value) => {
     let copy = clone(store);

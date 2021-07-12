@@ -24,17 +24,17 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
  * defaultShowCode: true
  */
 import React from 'react';
-import Global, { useGlobal } from 'back-store';
+import Store, { useStore } from 'back-store';
 const Root = () => {
   return (
-    <Global value={{ count: 0 }}>
+    <Store value={{ count: 0 }}>
       <App />
-    </Global>
+    </Store>
   );
 };
 
 const App = () => {
-  const [store, setStore] = useGlobal(); // getting global state from store
+  const [store, setStore] = useStore(); // getting Store state from store
   const { count } = store;
   const plusOne = () => setStore({ count: count + 1 }); // just like setState
   const minusOne = () => setStore({ count: count - 1 });

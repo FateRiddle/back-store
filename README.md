@@ -1,4 +1,4 @@
-# useGlobal
+# useStore
 
 Minimalist state management tools only for React.js
 
@@ -10,17 +10,17 @@ Minimalist state management tools only for React.js
 
 ```js
 import React from 'react';
-import Global, { useGlobal } from 'back-store';
+import Store, { useStore } from 'back-store';
 const Root = () => {
   return (
-    <Global value={{ page1: { count: 1 }, page2: { a: { b: 'hello' } } }}>
+    <Store value={{ page1: { count: 1 }, page2: { a: { b: 'hello' } } }}>
       <App />
-    </Global>
+    </Store>
   );
 };
 
 const App = () => {
-  const [store, setStore] = useGlobal('page1'); // getting global state from store
+  const [store, setStore] = useStore('page1'); // getting Store state from store
   const { count } = store;
   const plusOne = () => setStore({ count: count + 1 }); // just like setState
   const plusTen = () => setStore(store => ({ count: count + 10 })); // support function
