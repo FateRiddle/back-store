@@ -1,21 +1,29 @@
 ---
 hero:
   title: back-store
-  desc: Minimalist state management tools only for React.js
+  desc: Minimalist state management library based on React.js hooks
   actions:
     - text: Getting Started
       link: /guide
 features:
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
+  - icon: https://img.alicdn.com/imgextra/i3/O1CN01dxRZQ61z7XGPRbNeN_!!6000000006667-2-tps-200-200.png
     title: Progressive Adoption
-    desc: a few lines of code & it's set for any React project
+    desc: a few lines of code & it's set for any React project, co-exist with any state management libraries
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/d60657df-0822-4631-9d7c-e7a869c2f21c/k79dmz3q_w126_h126.png
     title: Minimalist Api
-    desc: no boilerplate code, intuitive api
+    desc: Zero boilerplate code, intuitive usage just like using native `setState`, but works for global states
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
     title: Extremely Reusable
-    desc: reusing components in another project without refactoring
-footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
+    desc: reusing components powered by back-store in another project without deep refactoring
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
+    title: Async, No Problem
+    desc: No react-saga/react-thunk etc., zero refactoring needed for `async code`
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
+    title: Visual Development Tools
+    desc: with 'debug=true' props, a visual display of states on the fly
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
+    title: TypeScript Support
+    desc: not a big fan of TypeScript, we support it nevertheless
 ---
 
 ```jsx
@@ -34,16 +42,16 @@ const Root = () => {
 };
 
 const App = () => {
-  const [store, setStore] = useStore(); // getting Store state from store
+  const [store, setStore] = useStore(); // getting global state
   const { count } = store;
-  const plusOne = () => setStore({ count: count + 1 }); // just like setState
-  const minusOne = () => setStore(({ count }) => ({ count: count - 1 }));
+  const plusOne = () => setStore({ count: count + 1 }); // setting global state, just like setState
+  const minusOne = () => setStore(({ count }) => ({ count: count - 1 })); // supporting functions
   return (
-    <div>
-      <div>{count}</div>
+    <>
+      <h2>{count}</h2>
       <button onClick={plusOne}>+</button>
       <button onClick={minusOne}>-</button>
-    </div>
+    </>
   );
 };
 

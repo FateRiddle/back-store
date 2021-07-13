@@ -6,6 +6,27 @@ nav:
   title: guide
 ---
 
+<div style="display:flex;align-items:center;margin-bottom:24px">
+  <img src="https://img.alicdn.com/imgextra/i3/O1CN01dxRZQ61z7XGPRbNeN_!!6000000006667-2-tps-200-200.png" alt="logo" width="48px"/>
+  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender</span>
+</div>
+<p style="display:flex;justify-content:space-between;width:440px">
+  <a href="https://www.npmjs.com/package/form-render?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square">
+  </a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square">
+  </a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square">
+  </a>
+  <a>
+    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
+  </a>
+</p>
+
+## Usage
+
 ```jsx
 /**
  * transform: true
@@ -14,30 +35,21 @@ nav:
 import React from 'react';
 import Store, { useStore } from 'back-store';
 
-const Wrapper = ({ children }) => <div>{children}</div>;
-
-// 模拟在很底层的组件需要取全局的状态
+// project root component
 const Root = () => {
   return (
     <Store value={{ count: 1 }}>
-      <Wrapper>
-        <Wrapper>
-          <Wrapper>
-            <Wrapper>
-              <App />
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
-      </Wrapper>
+      <App />
     </Store>
   );
 };
 
+// get/set global states in any component
 const App = () => {
-  const [store, setStore] = useStore(); // getting Store state from store
+  const [store, setStore] = useStore();
   const { count } = store;
 
-  const plusOne = () => setStore('count', count + 1);
+  const plusOne = () => setStore({ count: count + 1 });
   const minusOne = () => setStore({ count: count - 1 });
   const setRandom = () => setStore('a.b.c', Math.random());
   const setStateWithFunction = () => {
@@ -49,13 +61,13 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div>{JSON.stringify(store)}</div>
+    <>
+      <h1>{JSON.stringify(store)}</h1>
       <button onClick={plusOne}>+</button>
       <button onClick={minusOne}>-</button>
-      <button onClick={setRandom}>a.b.c</button>
-      <button onClick={setStateWithFunction}>use function</button>
-    </div>
+      <button onClick={setRandom}>setting state of deep structure</button>
+      <button onClick={setStateWithFunction}>+10 using function</button>
+    </>
   );
 };
 
@@ -64,15 +76,33 @@ export default Root;
 
 ## Motivation
 
-Redux is pretty good for building up a project, but if you ever try to make small changes to an old redux project, that's another story. What I find most state management tools have in common are traits below (using redux in explanation for simplicity):
+For newcomers, one of the great barrier in React.js is learning how to use a state management tool (typically redux) to write "real world" complex apps. Why does it feel so hard? (for the discussion I'll use redux as example)
 
-1. Redundent layer of abstruction. We get used to this "dispatch action" model, but so often I find myself dispatching an action `showModal`, just to set a state called `showModal` from `false` to `true`. React state is usually enough of abstruction, we don't need another layer of abstruction on top of that.
+1. **Redundent layer of abstruction.** We are getting used to "dispatch action" model, but so often I find myself dispatching an action `showModal`, only to set a state called `modalVisible` from `false` to `true`. React state is enough abstruction, another layer of abstruction on top of it can be redundent.
 
-2. Re-learn how to write async code. If you ever use redux for real project, you need to re-learn how to write async code and pick up another library no less, all because redux needs it's reducer to be synchronize.
+2. **Re-learn how to write async code.** It's also a redux design choice to keep any side-effect(like async data fetching) out of its core loop, that results you to re-learn how to write async code to cope with redux, and picking up another library like `redux-thunk` no less. This also makes refactoring out of/into redux costly, which lead to our final point
 
-3. Hardly reusable. It's always easy to reuse a pure component, but so often we want to reuse something with state & logic. If you're trying to reuse a page written in redux in another pure react app, good luck with that. Either you turn your app into redux project or you painfully refactoring all the redux
+3. **Hardly reusable**. It's always easy to reuse a pure component, but so often we want to reuse something with state & logic. If you're trying to reuse a page written in redux in another "normal" react app, good luck with that.
 
-And
+Does it struck you that managing state **shouldn't be so hard**?
+
+- All we want(most of the time) is a global store to store some global states, then having get/set method to fetch/update those global state from anywhere in your project.
+
+* Also logically, getting/setting global states shouldn't felt any different from getting/setting local states in api design. So ideally we'll be having a similar api to `this.setState` & `useState` for global states managing, something like:
+
+```js
+// local
+this.setState({ text: 'hello' });
+// global
+setGlobal({ text: 'hello' });
+
+// local
+const { text } = this.state;
+//global
+const { text } = globalState;
+```
+
+Thus `back-store` is born.
 
 ## Install
 
@@ -80,11 +110,10 @@ And
 tnpm i -S back-store
 ```
 
-## Usage
+## Adopting in a real project
 
 ### Step 1
 
-- declare your Store state structure, in a context-like api (Yes it's just a React context provider).
 - wrapping your `<App />` inside the context provider `Store`
 
 ```js
@@ -127,29 +156,13 @@ const Counter = () => {
 };
 ```
 
-Here's the complete demo for the above code:
+Below is the complete running demo for the above code:
 
 <code src='./demo/index.jsx' />
 
-## FAQ
-
-1. How to get access to the very top level of Store store?
-
-```js
-const [store, setStore] = useStore();
-```
-
-2. How to only using `setStore`?
-
-```js
-const [_, setStore] = useStore('xxx');
-```
-
-3. How to
-
 ## Features
 
-1. `lodash.set` like syntax for deep structures
+1. **`lodash.set` like syntax for deep structures**
 
 ```js
 // Anywhere inside <App />
@@ -166,7 +179,9 @@ const Something = () => {
 };
 ```
 
-2. You actually don't need to declare anything, and everything still works
+2. **simple Api**
+
+You actually don't need to declare anything, and everything'll still work(inital global state will be undefined of course). This is perfect for quick refactoring
 
 ```js
 import React from 'react';
@@ -181,19 +196,25 @@ const Root = () => {
 };
 ```
 
-3. Highly reusable
+3. **Highly reusable**
 
-To move a component accessing Store state/methods to another pure react project:
+What it takes to move a "back-store powered" component to another normal react.js project?
 
 ```js
+import React from 'react';
+import Store from 'back-store';
+// wrap your wrapper
 const Root = () => {
+  const initialStatesForReusableComponent = { data: 123, name: 'hello' };
+
   return (
-    <Store>
+    <Store value={initialStatesForReusableComponent}>
       <AnotherProject />
     </Store>
   );
 };
 
+// ReusableComponent is a component straight taking out of a back-store project
 const AnotherProject = () => (
   <div>
     <ReusableComponent />
@@ -201,114 +222,6 @@ const AnotherProject = () => (
 );
 ```
 
-4. Writing async code just like pure React, no need to learn another way (looking at other state management tools):
+4. Writing async code now, in a way you've already known
 
-```js
-// Anywhere inside <App />
-import { useStore } from 'back-store';
-const Something = () => {
-  const [store, setStore] = useStore('page2');
-  const changeTextAsync = () => {
-    apiCalls().then(res => setStore('a.b.text', res);)
-  }
-  return (
-    <div>
-      <p>{store.a.b.text}</p>
-      <button onClick={changeText}>click me</button>
-    </div>
-  );
-};
-```
-
-```jsx
-import React from 'react';
-import Store, { useStore } from 'back-store';
-
-const Wrapper = ({ children }) => <div>{children}</div>;
-
-const Root = () => {
-  return (
-    <Store value={{ count: 1 }}>
-      <Wrapper>
-        <Wrapper>
-          <Wrapper>
-            <Wrapper>
-              <App />
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
-      </Wrapper>
-    </Store>
-  );
-};
-
-const App = () => {
-  const [store, setStore] = useStore(); // getting Store state from store
-  const { count } = store;
-
-  const plusOne = () => setStore({ count: count + 1 });
-
-  const minusOne = () => setStore({ count: count - 1 });
-  return (
-    <div>
-      <div>{JSON.stringify(store)}</div>
-      <button onClick={plusOne}>+</button>
-      <button onClick={minusOne}>-</button>
-    </div>
-  );
-};
-
-export default Root;
-```
-
-class way
-
-```js
-import React from 'react';
-import Store, { useStore, StoreContext } from 'back-store';
-
-const Wrapper = ({ children }) => <div>{children}</div>;
-
-const Root = () => {
-  return (
-    <Store value={{ page1: { count: 1 }, page2: { count: 2 } }}>
-      <Wrapper>
-        <Wrapper>
-          <Wrapper>
-            <Wrapper>
-              <App />
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
-      </Wrapper>
-    </Store>
-  );
-};
-
-class App extends React.Component {
-  plusOne = () => {
-    const [store, setStore] = this.context;
-    setStore('page1.count', store.page1.count + 1);
-  };
-
-  minusOne = () => {
-    const [store, setStore] = this.context;
-    setStore('page1.count', store.page1.count - 1);
-  };
-
-  render() {
-    const [store, setStore] = this.context;
-    return (
-      <div>
-        <div>{store.page1.count}</div>
-        <button onClick={this.plusOne}>+</button>
-        <button onClick={this.minusOne}>-</button>
-      </div>
-    );
-  }
-}
-
-App.contextType = StoreContext;
-
-export default Root;
-```
+See [Handling async code](/guide/async)

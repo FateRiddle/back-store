@@ -6,6 +6,8 @@ const clone = value => JSON.parse(JSON.stringify(value));
 
 const isPath = p => p && typeof p === 'string';
 
+const isObject = a => Object.prototype.toString.call(a).indexOf('Object') > -1;
+
 const useSet = initState => {
   // 提供函数式调用，避免同时修改一个状态时产生的state闭包，只有最后一次调用更新的问题
   const reducer = (state, action) => {
@@ -30,7 +32,13 @@ const useSet = initState => {
 
   const setStateByPath = (path, value) => {
     let copy = clone(state);
-    const newState = set(copy, path, value);
+    const oldState = get(copy, path);
+    let mergeValue = value;
+    if (isObject(oldState) && isObject(value)) {
+      mergeValue = { ...oldState, ...value };
+    }
+    const newState = set(copy, path, mergeValue);
+    console.log(copy.page2, path);
     setState(newState);
   };
 
