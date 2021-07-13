@@ -50,15 +50,18 @@ const StoreContext = {};
 StoreContext.STORE = createContext();
 StoreContext.SET = createContext();
 
-const Store = ({ value, children }) => {
+const Store = ({ value, debug, children }) => {
   const [store, setStore] = useSet(value);
   const Ctx1 = StoreContext.STORE;
   const Ctx2 = StoreContext.SET;
 
   return (
-    <Ctx1.Provider value={store}>
-      <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
-    </Ctx1.Provider>
+    <>
+      {debug === true ? <div>{}</div> : null}
+      <Ctx1.Provider value={store}>
+        <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
+      </Ctx1.Provider>
+    </>
   );
 };
 
