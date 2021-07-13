@@ -4,6 +4,8 @@ import set from 'lodash/set';
 
 const clone = value => JSON.parse(JSON.stringify(value));
 
+const isPath = p => p && typeof p === 'string';
+
 const useSet = initState => {
   // 提供函数式调用，避免同时修改一个状态时产生的state闭包，只有最后一次调用更新的问题
   const reducer = (state, action) => {
@@ -15,29 +17,23 @@ const useSet = initState => {
     }
     return result;
   };
+
   const [state, setState] = useReducer(reducer, initState);
-  const setStateWithPath = (path, value) => {
+
+  const _setState = (firstArg, ...rest) => {
+    if (isPath(firstArg)) {
+      setStateByPath(firstArg, ...rest);
+    } else {
+      setState(firstArg);
+    }
+  };
+
+  const setStateByPath = (path, value) => {
     let copy = clone(state);
     const newState = set(copy, path, value);
     setState(newState);
   };
 
-  let path;
-
-  const _setState = (firstArg, ...rest) => {
-    if (firstArg && typeof firstArg === 'string') {
-      let _path = firstArg;
-      if (path && typeof path === 'string') {
-        _path = path + '.' + firstArg;
-      }
-      setStateWithPath(_path, ...rest);
-    } else {
-      if (path && typeof path === 'string') {
-        setStateWithPath(path, firstArg);
-      }
-      setState(firstArg);
-    }
-  };
   return [state, _setState];
 };
 
@@ -50,6 +46,7 @@ const Store = ({ value, children }) => {
   const [store, setStore] = useSet(value);
   const Ctx1 = StoreContext.STORE;
   const Ctx2 = StoreContext.SET;
+
   return (
     <Ctx1.Provider value={store}>
       <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
@@ -57,35 +54,24 @@ const Store = ({ value, children }) => {
   );
 };
 
-export const useStore = path => {
+export const useStore = rootPath => {
   const store = useContext(StoreContext.STORE);
   const setStore = useContext(StoreContext.SET);
 
-  const setStateWithPath = (path, value) => {
-    let copy = clone(store);
-    const newState = set(copy, path, value);
-    setStore(newState);
-  };
-
+  let _setStore = setStore;
   let _store = store;
-  if (path && typeof path === 'string') {
-    _store = get(store, path);
+  if (isPath(rootPath)) {
+    _store = get(store, rootPath, {});
+    _setStore = (firstArg, ...rest) => {
+      if (isPath(firstArg)) {
+        const realPath = rootPath + '.' + firstArg;
+        setStore(realPath, ...rest);
+      } else {
+        setStore(rootPath, firstArg);
+      }
+    };
   }
 
-  const _setStore = (firstArg, ...rest) => {
-    if (firstArg && typeof firstArg === 'string') {
-      let _path = firstArg;
-      if (path && typeof path === 'string') {
-        _path = path + '.' + firstArg;
-      }
-      setStateWithPath(_path, ...rest);
-    } else {
-      if (path && typeof path === 'string') {
-        setStateWithPath(path, firstArg);
-      }
-      setStore(firstArg);
-    }
-  };
   return [_store, _setStore];
 };
 
