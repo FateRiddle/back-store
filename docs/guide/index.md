@@ -25,6 +25,12 @@ nav:
   </a>
 </p>
 
+## Install
+
+```sh
+npm i back-store
+```
+
 ## Usage
 
 ```jsx
@@ -105,12 +111,6 @@ const { text } = globalState;
 ```
 
 Thus `back-store` is born.
-
-## Install
-
-```sh
-tnpm i -S back-store
-```
 
 ## Adopting in a real project
 
