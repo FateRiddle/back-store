@@ -88,7 +88,9 @@ Does it struck you that managing state **shouldn't be so hard**?
 
 - All we want(most of the time) is a global store to store some global states, then having get/set method to fetch/update those global state from anywhere in your project.
 
-* Also logically, getting/setting global states shouldn't felt any different from getting/setting local states in api design. So ideally we'll be having a similar api to `this.setState` & `useState` for global states managing, something like:
+<img src="https://img.alicdn.com/imgextra/i2/O1CN01PCC8nj1IMARDQBza2_!!6000000000878-2-tps-406-254.png" width="400" />
+
+- Also logically, getting/setting global states shouldn't felt any different from getting/setting local states in api design. So ideally we'll be having a similar api to `this.setState` & `useState` for global states managing, something like:
 
 ```js
 // local
