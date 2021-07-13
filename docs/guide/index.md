@@ -1,6 +1,6 @@
 ---
 order: 1
-title: getting started
+title: Getting Started
 nav:
   order: 1
   title: guide
@@ -8,17 +8,17 @@ nav:
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/imgextra/i3/O1CN01dxRZQ61z7XGPRbNeN_!!6000000006667-2-tps-200-200.png" alt="logo" width="48px"/>
-  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender</span>
+  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">back-store</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/form-render?_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square">
+  <a href="https://www.npmjs.com/package/back-store?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/back-store.svg?maxAge=3600&style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/back-store">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/back-store.svg?style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/back-store">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/back-store.svg?style=flat-square">
   </a>
   <a>
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
@@ -222,6 +222,6 @@ const AnotherProject = () => (
 );
 ```
 
-4. Writing async code now, in a way you've already known
+4. **Writing async code now, in a way you've already known**
 
 See [Handling async code](/guide/async)
