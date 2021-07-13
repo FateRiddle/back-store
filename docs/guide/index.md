@@ -127,6 +127,10 @@ const Counter = () => {
 };
 ```
 
+Here's the complete demo for the above code:
+
+<code src='./demo/index.jsx' />
+
 ## FAQ
 
 1. How to get access to the very top level of Store store?
@@ -308,5 +312,3 @@ App.contextType = StoreContext;
 
 export default Root;
 ```
-
-dd

@@ -37,7 +37,7 @@ const App = () => {
   const [store, setStore] = useStore(); // getting Store state from store
   const { count } = store;
   const plusOne = () => setStore({ count: count + 1 }); // just like setState
-  const minusOne = () => setStore({ count: count - 1 });
+  const minusOne = () => setStore(({ count }) => ({ count: count - 1 }));
   return (
     <div>
       <div>{count}</div>
