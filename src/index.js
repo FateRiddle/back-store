@@ -23,7 +23,7 @@ const useSet = initState => {
   const [state, setState] = useReducer(reducer, initState);
 
   const _setState = (firstArg, ...rest) => {
-    if (isPath(firstArg)) {
+    if (isPath(firstArg) && rest !== undefined) {
       setStateByPath(firstArg, ...rest);
     } else {
       setState(firstArg);
@@ -38,7 +38,6 @@ const useSet = initState => {
       mergeValue = { ...oldState, ...value };
     }
     const newState = set(copy, path, mergeValue);
-    console.log(copy.page2, path);
     setState(newState);
   };
 
@@ -74,7 +73,7 @@ export const useStore = rootPath => {
   if (isPath(rootPath)) {
     _store = get(store, rootPath, {});
     _setStore = (firstArg, ...rest) => {
-      if (isPath(firstArg)) {
+      if (isPath(firstArg) && rest !== undefined) {
         const realPath = rootPath + '.' + firstArg;
         setStore(realPath, ...rest);
       } else {
