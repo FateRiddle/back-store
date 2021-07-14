@@ -56,7 +56,7 @@ const Store = ({ value, debug, children }) => {
 
   return (
     <>
-      {debug === true ? <div>{}</div> : null}
+      {debug === true ? <div>{JSON.stringify(store)}</div> : null}
       <Ctx1.Provider value={store}>
         <Ctx2.Provider value={setStore}>{children}</Ctx2.Provider>
       </Ctx1.Provider>
