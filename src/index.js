@@ -23,7 +23,7 @@ const useSet = initState => {
   const [state, setState] = useReducer(reducer, initState);
 
   const _setState = (firstArg, ...rest) => {
-    if (isPath(firstArg) && rest !== undefined) {
+    if (isPath(firstArg) && rest.length > 0) {
       setStateByPath(firstArg, ...rest);
     } else {
       setState(firstArg);
@@ -71,9 +71,9 @@ export const useStore = rootPath => {
   let _setStore = setStore;
   let _store = store;
   if (isPath(rootPath)) {
-    _store = get(store, rootPath, {});
+    _store = get(store, rootPath);
     _setStore = (firstArg, ...rest) => {
-      if (isPath(firstArg) && rest !== undefined) {
+      if (isPath(firstArg) && rest.length > 0) {
         const realPath = rootPath + '.' + firstArg;
         setStore(realPath, ...rest);
       } else {
