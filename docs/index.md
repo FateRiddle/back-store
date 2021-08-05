@@ -32,28 +32,53 @@ features:
  * defaultShowCode: true
  */
 import React from 'react';
-import Store, { useStore } from 'back-store';
-const Root = () => {
+import { Button } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import logger from '@ali/fr-logger';
+
+const schema = {
+  displayType: 'row',
+  labelWidth: 60,
+  type: 'object',
+  properties: {
+    dateRange: {
+      bind: ['startDate', 'endDate'],
+      title: '日期',
+      type: 'range',
+      format: 'date',
+    },
+    siteUrl: {
+      title: '网址',
+      type: 'string',
+      placeholder: '此处必填',
+      required: true,
+      props: {
+        addonBefore: 'https://',
+        addonAfter: '.com',
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  const form = useForm(logger);
+  const onFinish = (formData, errors) => {
+    if (errors.length > 0) {
+      alert('errors:' + JSON.stringify(errors));
+    } else {
+      alert('formData:' + JSON.stringify(formData, null, 2));
+    }
+  };
+
   return (
-    <Store value={{ count: 0 }}>
-      <App />
-    </Store>
+    <div>
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <Button type="primary" onClick={form.submit}>
+        提交
+      </Button>
+    </div>
   );
 };
 
-const App = () => {
-  const [store, setStore] = useStore(); // getting global state
-  const { count } = store;
-  const plusOne = () => setStore({ count: count + 1 }); // setting global state, just like setState
-  const minusOne = () => setStore(({ count }) => ({ count: count - 1 })); // supporting functions
-  return (
-    <>
-      <h2>{count}</h2>
-      <button onClick={plusOne}>+</button>
-      <button onClick={minusOne}>-</button>
-    </>
-  );
-};
-
-export default Root;
+export default Demo;
 ```

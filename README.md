@@ -1,45 +1,26 @@
-# useStore
+# FR Logger
 
-Minimalist state management tools only for React.js
+开箱即用的 FormRender 表单埋点配套方案
 
-## Features
+## 前提
 
-- Progressive adoption
-- Minimalist api
-- Extremely reusable
+使用 form-render 1.x 的项目
+
+## 使用
 
 ```js
-import React from 'react';
-import Store, { useStore } from 'back-store';
-const Root = () => {
-  return (
-    <Store value={{ page1: { count: 1 }, page2: { a: { b: 'hello' } } }}>
-      <App />
-    </Store>
-  );
-};
+import FormRender, { useForm } from 'form-render'
+import logger from '@ali/fr-logger'
 
-const App = () => {
-  const [store, setStore] = useStore('page1'); // getting Store state from store
-  const { count } = store;
-  const plusOne = () => setStore({ count: count + 1 }); // just like setState
-  const plusTen = () => setStore(store => ({ count: count + 10 })); // support function
-  const minusOne = () => setStore('count', count - 1); // lodash.set like syntax for possible deep structure setStore('a.b.c', xx)
-  return (
-    <div>
-      <div>{count}</div>
-      <button onClick={plusOne}>+</button>
-      <button onClick={plusOne}>+10</button>
-      <button onClick={minusOne}>-</button>
-    </div>
-  );
-};
-
-export default Root;
+const Demo = () => {
+  const form = useForm(logger)
+  return <FormRender
+    id="my-test-form1" // 表单唯一标识，会作为埋点信息之一
+    form={form}
+    schema={{ ... }}
+    onFinish={(data, errors) => { ... }}
+  />
+}
 ```
 
-## CHANGELOG
-
-### v1.1.0
-
-添加函数式调用
+简单的说，在正常的使用 form-render 1.x 的同时，唯一的改动是将 logger 注入到 useForm 里。
