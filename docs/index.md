@@ -31,30 +31,30 @@ features:
  * transform: true
  * defaultShowCode: true
  */
-import React from 'react';
-import { Button } from 'antd';
-import FormRender, { useForm } from 'form-render';
-import logger from '@ali/fr-logger';
+import React from "react";
+import { Button } from "antd";
+import FormRender, { useForm } from "form-render";
+import logger from "@ali/fr-logger";
 
 const schema = {
-  displayType: 'row',
+  displayType: "row",
   labelWidth: 60,
-  type: 'object',
+  type: "object",
   properties: {
     dateRange: {
-      bind: ['startDate', 'endDate'],
-      title: '日期',
-      type: 'range',
-      format: 'date',
+      bind: ["startDate", "endDate"],
+      title: "日期",
+      type: "range",
+      format: "date",
     },
     siteUrl: {
-      title: '网址',
-      type: 'string',
-      placeholder: '此处必填',
+      title: "网址",
+      type: "string",
+      placeholder: "此处必填",
       required: true,
       props: {
-        addonBefore: 'https://',
-        addonAfter: '.com',
+        addonBefore: "https://",
+        addonAfter: ".com",
       },
     },
   },
@@ -64,9 +64,9 @@ const Demo = () => {
   const form = useForm(logger);
   const onFinish = (formData, errors) => {
     if (errors.length > 0) {
-      alert('errors:' + JSON.stringify(errors));
+      alert("errors:" + JSON.stringify(errors));
     } else {
-      alert('formData:' + JSON.stringify(formData, null, 2));
+      alert("formData:" + JSON.stringify(formData, null, 2));
     }
   };
 

@@ -14,9 +14,9 @@ nav:
 // top level
 const [store, setStore] = useStore();
 // 1 level deep
-const [store2, setStore2] = useStore('user');
+const [store2, setStore2] = useStore("user");
 // 2 levels deep
-const [store3, setStore3] = useStore('user.profile');
+const [store3, setStore3] = useStore("user.profile");
 ```
 
 2. Sometimes I only need to update states, how to only use `setStore`?
