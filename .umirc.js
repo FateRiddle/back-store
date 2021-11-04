@@ -12,4 +12,8 @@ export default defineConfig({
   outputPath: 'docs-dist',
   mode: 'site',
   // more config: https://d.umijs.org/config
+  navs: [
+    null,
+    { title: 'GitHub', path: 'https://github.com/FateRiddle/back-store' },
+  ],
 });
