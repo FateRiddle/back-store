@@ -31,15 +31,21 @@ const useSet = initState => {
   };
 
   const setStateByPath = (path, value) => {
-    let copy = clone(state);
-    const oldState = get(copy, path);
-    let mergeValue = value;
-    if (isObject(oldState) && isObject(value)) {
-      mergeValue = { ...oldState, ...value };
-    }
-    const newState = set(copy, path, mergeValue);
-    console.log(copy.page2, path);
-    setState(newState);
+    setState(state => {
+      let copy = clone(state);
+      const oldState = get(copy, path);
+      let mergeValue;
+      if (typeof value === 'function') {
+        mergeValue = value(oldState);
+      } else {
+        mergeValue = value;
+      }
+      if (isObject(oldState) && isObject(mergeValue)) {
+        mergeValue = { ...oldState, ...mergeValue };
+      }
+      const newState = set(copy, path, mergeValue);
+      return newState;
+    });
   };
 
   return [state, _setState];
